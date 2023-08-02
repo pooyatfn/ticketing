@@ -124,5 +124,14 @@ class CategoryResource(Resource):
             return {'message': 'Category not found'}, 404
 
 
+class CategoryListResource(Resource):
+    def get(self):
+        categories = Category.query.all()
+        if categories:
+            return [category.to_dict() for category in categories]
+        else:
+            return {'message': 'No category found'}, 404
+
+
 if __name__ == '__main__':
     app.run()
