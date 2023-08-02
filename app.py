@@ -132,6 +132,13 @@ class CategoryListResource(Resource):
         else:
             return {'message': 'No category found'}, 404
 
+    def post(self):
+        data = category_parser.parse_args()
+        category = Category(name=data['name'], parent_id=data['parent_id'])
+        db.session.add(category)
+        db.session.commit()
+        return category.to_dict(), 201
+
 
 if __name__ == '__main__':
     app.run()
