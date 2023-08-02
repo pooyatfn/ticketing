@@ -70,8 +70,15 @@ class TemplateResource(Resource):
         else:
             return {'message': 'Template not found'}, 404
 
-    def delete(self):
-        pass
+    def delete(self, template_id):
+        # Delete the template from the database
+        template = Template.query.get(template_id)
+        if template:
+            db.session.delete(template)
+            db.session.commit()
+            return {'message': 'Template deleted successfully'}
+        else:
+            return {'message': 'Template not found'}, 404
 
 
 if __name__ == '__main__':
