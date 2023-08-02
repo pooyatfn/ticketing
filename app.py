@@ -95,5 +95,14 @@ class TemplateListResource(Resource):
         return template.to_dict(), 201
 
 
+class CategoryResource(Resource):
+    def get(self, category_id):
+        category = Category.query.get(category_id)
+        if category:
+            return category.to_dict()
+        else:
+            return {'message': 'Category not found'}, 404
+
+
 if __name__ == '__main__':
     app.run()
