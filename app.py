@@ -57,8 +57,18 @@ class TemplateResource(Resource):
         else:
             return {'message': 'Template not found'}, 404
 
-    def put(self):
-        pass
+    def put(self, template_id):
+        data = template_parser.parse_args()
+        # Update the template in the database
+        template = Template.query.get(template_id)
+        if template:
+            template.title = data['title']
+            template.description = data['description']
+            template.category_id = data['category_id']
+            db.session.commit()
+            return template.to_dict()
+        else:
+            return {'message': 'Template not found'}, 404
 
     def delete(self):
         pass
