@@ -83,13 +83,24 @@ class TemplateResource(Resource):
             return {'message': 'Template not found'}, 404
 
 
+def category_exists(category_id):
+    if Category.query.get(category_id):
+        return True
+    else:
+        return False
+
+
 class TemplateListResource(Resource):
     def get(self, category_id):
+        if not category_exists(category_id):
+            return {'message': 'Category does not exist'}
         # Retrieve the templates from the database based on the category ID
         templates = Template.query.filter_by(category_id=category_id).all()
         return [template.to_dict() for template in templates]
 
     def post(self, category_id):
+        if not category_exists(category_id):
+            return {'message': 'Category does not exist'}
         data = template_parser.parse_args()
         # Create a new template
         template = Template(title=data['title'], description=data['description'], category_id=category_id)
@@ -128,13 +139,6 @@ class CategoryResource(Resource):
             return {'message': 'Category deleted successfully'}
         else:
             return {'message': 'Category not found'}, 404
-
-
-def category_exists(category_id):
-    if Category.query.get(category_id):
-        return True
-    else:
-        return False
 
 
 class CategoryListResource(Resource):
