@@ -124,6 +124,13 @@ class CategoryResource(Resource):
             return {'message': 'Category not found'}, 404
 
 
+def category_exists(category_id):
+    if Category.query.get(category_id):
+        return True
+    else:
+        return False
+
+
 class CategoryListResource(Resource):
     def get(self):
         categories = Category.query.all()
@@ -134,7 +141,14 @@ class CategoryListResource(Resource):
 
     def post(self):
         data = category_parser.parse_args()
-        category = Category(name=data['name'], parent_id=data['parent_id'])
+        parent_id = data['parent_id']
+
+        if parent_id is not None:
+            if not category_exists(parent_id):
+                return {
+                    'message': f'Category not created - parent category with id {parent_id} does not exist'}, 400
+
+        category = Category(name=data['name'], parent_id=parent_id)
         db.session.add(category)
         db.session.commit()
         return category.to_dict(), 201
