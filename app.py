@@ -63,14 +63,14 @@ class TemplateResource(Resource):
         data = template_parser.parse_args()
         # Update the template in the database
         template = Template.query.get(template_id)
-        if template:
+        if template and category_exists(data['category_id']):
             template.title = data['title']
             template.description = data['description']
             template.category_id = data['category_id']
             db.session.commit()
             return template.to_dict()
         else:
-            return {'message': 'Template not found'}, 404
+            return {'message': 'Template not found or category with that id does not exist'}, 404
 
     def delete(self, template_id):
         # Delete the template from the database
@@ -122,7 +122,7 @@ class CategoryResource(Resource):
         data = category_parser.parse_args()
         # Update the category in the database
         category = Category.query.get(category_id)
-        if category:
+        if category and category_exists(category_id):
             category.name = data['name']
             category.parent_id = data['parent_id']
             db.session.commit()
