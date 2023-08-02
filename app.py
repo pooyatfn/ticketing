@@ -140,5 +140,11 @@ class CategoryListResource(Resource):
         return category.to_dict(), 201
 
 
+api.add_resource(TemplateResource, '/templates/<int:template_id>')
+api.add_resource(TemplateListResource, '/categories/<int:category_id>/templates')
+api.add_resource(CategoryResource, '/categories/<int:category_id>')
+api.add_resource(CategoryListResource, '/categories')
+
+
 if __name__ == '__main__':
     app.run()
