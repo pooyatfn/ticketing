@@ -81,5 +81,12 @@ class TemplateResource(Resource):
             return {'message': 'Template not found'}, 404
 
 
+class TemplateListResource(Resource):
+    def get(self, category_id):
+        # Retrieve the templates from the database based on the category ID
+        templates = Template.query.filter_by(category_id=category_id).all()
+        return [template.to_dict() for template in templates]
+
+
 if __name__ == '__main__':
     app.run()
