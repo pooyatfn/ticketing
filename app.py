@@ -23,5 +23,18 @@ class Template(db.Model):
         }
 
 
+class Category(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    parent_id = db.Column(db.Integer, db.ForeignKey('category.id'))
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'parent_id': self.parent_id
+        }
+
+
 if __name__ == '__main__':
     app.run()
