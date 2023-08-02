@@ -44,7 +44,6 @@ db.create_all()
 template_parser = reqparse.RequestParser()
 template_parser.add_argument('title', type=str, required=True)
 template_parser.add_argument('description', type=str, required=True)
-template_parser.add_argument('category_id', type=int, required=True)
 
 category_parser = reqparse.RequestParser()
 category_parser.add_argument('name', type=str, required=True)
