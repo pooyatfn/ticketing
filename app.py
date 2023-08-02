@@ -114,6 +114,15 @@ class CategoryResource(Resource):
         else:
             return {'message': 'Category not found'}, 404
 
+    def delete(self, category_id):
+        category = Category.query.get(category_id)
+        if category:
+            db.session.delete(category)
+            db.session.commit()
+            return {'message': 'Category deleted successfully'}
+        else:
+            return {'message': 'Category not found'}, 404
+
 
 if __name__ == '__main__':
     app.run()
