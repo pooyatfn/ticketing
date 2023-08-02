@@ -87,6 +87,13 @@ class TemplateListResource(Resource):
         templates = Template.query.filter_by(category_id=category_id).all()
         return [template.to_dict() for template in templates]
 
+    def post(self, category_id):
+        data = template_parser.parse_args()
+        template = Template(title=data['title'], description=data['description'], category_id=category_id)
+        db.session.add(template)
+        db.session.commit()
+        return template.to_dict(), 201
+
 
 if __name__ == '__main__':
     app.run()
