@@ -103,6 +103,17 @@ class CategoryResource(Resource):
         else:
             return {'message': 'Category not found'}, 404
 
+    def put(self, category_id):
+        data = category_parser.parse_args()
+        category = Category.query.get(category_id)
+        if category:
+            category.name = data['name']
+            category.parent_id = data['parent_id']
+            db.session.commit()
+            return category.to_dict()
+        else:
+            return {'message': 'Category not found'}, 404
+
 
 if __name__ == '__main__':
     app.run()
