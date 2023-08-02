@@ -50,8 +50,12 @@ category_parser.add_argument('parent_id', type=int)
 
 
 class TemplateResource(Resource):
-    def get(self):
-        pass
+    def get(self, template_id):
+        template = Template.query.get(template_id)
+        if template:
+            return template.to_dict()
+        else:
+            return {'message': 'Template not found'}, 404
 
     def put(self):
         pass
