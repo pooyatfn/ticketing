@@ -122,13 +122,13 @@ class CategoryResource(Resource):
         data = category_parser.parse_args()
         # Update the category in the database
         category = Category.query.get(category_id)
-        if category and category_exists(category_id):
+        if category and category_exists(data['parent_id']):
             category.name = data['name']
             category.parent_id = data['parent_id']
             db.session.commit()
             return category.to_dict()
         else:
-            return {'message': 'Category not found'}, 404
+            return {'message': 'Current category or parent not found'}, 404
 
     def delete(self, category_id):
         # Delete the category from the database
