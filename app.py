@@ -48,5 +48,17 @@ category_parser = reqparse.RequestParser()
 category_parser.add_argument('name', type=str, required=True)
 category_parser.add_argument('parent_id', type=int)
 
+
+class TemplateResource(Resource):
+    def get(self):
+        pass
+
+    def put(self):
+        pass
+
+    def delete(self):
+        pass
+
+
 if __name__ == '__main__':
     app.run()
