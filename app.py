@@ -169,6 +169,5 @@ api.add_resource(TemplateListResource, '/categories/<int:category_id>/templates'
 api.add_resource(CategoryResource, '/categories/<int:category_id>')
 api.add_resource(CategoryListResource, '/categories')
 
-
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
